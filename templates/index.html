@@ -1,39 +1,153 @@
 {% extends "import.html" %} {% block content %}
 
-<center>
-  <br />
-  <h2>Crop Disease Diagnosis</h2>
-  <br />
+<style>
+  .custom-border {
+    border: 2px solid #28a745; /* Green border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding inside the border */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 3D box shadow */
+    background-color: rgba(58, 90, 64);
+    backdrop-filter: blur(10px); /* Blur effect */
+  }
 
-  <form id="upload-file" method="post" enctype="multipart/form-data">
-    <input
-      type="file"
-      name="file"
-      class="btn btn-success"
-      id="imageUpload"
-      accept=".png, .jpg, .jpeg"
-    />
-  </form>
+  .custom-file-input {
+    cursor: pointer;
+  }
 
-  <div class="image-section" style="display: none">
-    <img
-      id="imagePreview"
-      class="img-responsive"
-      src="#"
-      style="width: 300px; height: 300px"
-    /><br /><br />
-    <div>
-      <button type="button" class="btn btn-info btn-lg" id="btn-predict">
-        Predict!
-      </button>
+  .custom-file-label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+
+  .btn-predict {
+    background-color: #28a745; /* Green button */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-predict:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+
+  /* Additional text styling */
+  h2 {
+    font-family: "Arial", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff; /* White text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for emphasis */
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .mb-4 {
+    margin-bottom: 20px; /* Larger margin for spacing */
+  }
+
+  .btn-predict {
+    font-size: 12px; /* Larger font size */
+    font-weight: bold;
+    text-transform: uppercase; /* Convert text to uppercase */
+    letter-spacing: 1px; /* Increased letter spacing for emphasis */
+  }
+
+  .btn-predict:hover {
+    text-decoration: none; /* Remove underline on hover */
+  }
+
+  .mt-4 {
+    margin-top: 20px; /* Larger margin for spacing */
+  }
+
+  .result-text {
+    font-size: 20px; /* Larger font size */
+    font-weight: bold;
+    color: #000; /* Black text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for emphasis */
+  }
+
+  .result-area {
+    border: 2px solid green;
+    background-color: rgba(144, 238, 144, 0.2);
+    border-radius: 10px; /* Rounded corners */
+    padding: 15px; /* Padding inside the result area */
+    margin-top: 20px; /* Margin from the top */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.01); /* Box shadow */
+  }
+
+  /* Add space between the Predict button and Choose file area */
+  .input-group-append {
+    margin-left: 10px;
+  }
+
+  .container {
+    margin-top: 5rem;
+  }
+  .hero {
+    background: url("https://images.unsplash.com/photo-1504280645497-00afe6a47e43?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y3JvcCUyMGZpZWxkfGVufDB8fDB8fHww");
+    min-height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  section {
+    min-height: 100vh;
+    padding: 10rem 9% 2rem;
+  }
+  .text {
+    color: #000;
+  }
+</style>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="custom-border">
+          <h2 class="text-center mb-4">Crop Disease Diagnosis</h2>
+          <form id="upload-file" method="post" enctype="multipart/form-data">
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input
+                  type="file"
+                  name="file"
+                  class="custom-file-input"
+                  id="imageUpload"
+                  accept=".png, .jpg, .jpeg"
+                />
+                <label class="custom-file-label" for="imageUpload"
+                  >Choose image</label
+                >
+              </div>
+              <div class="input-group-append">
+                <button type="button" class="btn btn-predict" id="btn-predict">
+                  Predict!
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="text-center mt-4">
+            <div class="image-section" style="display: none">
+              <img id="imagePreview" class="img-fluid" src="#" alt="Preview" />
+            </div>
+            <div class="loader" style="display: none"></div>
+            <div class="result-area">
+              <h3 id="result" class="result-text mt-3"></h3>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="loader" style="display: none"></div>
-
-  <h3 id="result">
-    <span> </span>
-  </h3>
-</center>
-<br /><br />
 {% endblock %}
