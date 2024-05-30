@@ -39,9 +39,15 @@ def index():
     # Main page
     return render_template('index.html')
 
+@app.route('/aboutus', methods=['GET'])
+def index():
+    # Main page
+    return render_template('us.html')
 
-
-
+@app.route('/contributors', methods=['GET'])
+def index():
+    # Main page
+    return render_template('con.html')
 
 
 @app.route('/predict', methods=['GET', 'POST'])
